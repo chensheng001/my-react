@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <a onclick="push('/a')">aa</a>
+    <a onclick="push('/b')">bb</a>
+
+    <script>
+        function push(path) {
+          history.pushState({p: path},null,path)
+        }
+        window.addEventListener('popstate', (e) => {
+          console.log(history)
+          console.log(e)
+        })
+    </script>
+</body>
+</html>
