@@ -1,12 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from './react';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function event () {
+  alert(0)
+}
+//jsx语法 =》 虚拟dom对象 类
+let ele = React.createElement("div", {
+  name: "xxx"
+}, "hello ", React.createElement("button", {onClick: event}, "123"));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+class SubCounter {
+
+  componentWillMount() {
+    console.log('子组件 即将挂载')
+  }
+
+  componentDidMount() {
+    console.log('子组件 挂载完成')
+  }
+
+  render() {
+    console.log('render 子组件')
+    return 'sub counter'
+  }
+}
+
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {number:1}
+  }
+
+  componentWillMount() {
+    console.log('父组件 即将挂载')
+  }
+
+  componentDidMount() {
+    console.log('父组件 挂载完成')
+  }
+
+  render() {
+    console.log('render 父组件')
+    return (
+      React.createElement(SubCounter, {name: 'sub'})
+    )
+  }
+}
+
+React.render(React.createElement(Counter, {name: 'zf'}),document.getElementById('root'));
