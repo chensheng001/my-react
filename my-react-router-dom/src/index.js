@@ -29,11 +29,13 @@ export default class App extends Component{
 
           </div>
           <div className='route'>
-            <Route path='/home' exact component={Home} ></Route>
-            <Route path='/home/123' component={Home} ></Route>
-            <Route path='/profile' component={Profile} ></Route>
-            <Route path='/user' component={User} ></Route>
-            <Redirect to={'/home'} />
+            <Switch>
+              <Route path='/home' exact component={Home} ></Route>
+              <Route path='/home/123' component={Home} ></Route>
+              <Route path='/profile' component={Profile} ></Route>
+              <Route path='/user' component={User} ></Route>
+              <Redirect to={'/home'} />
+            </Switch>
           </div>
         </div>
       </Router>
