@@ -2,7 +2,7 @@
 
 /*------count 的发布订阅者实践------*/
 
-const createStore = (initState,reducer) => {
+const createStore = (reducer,initState) => {
   let state = initState;
   let listeners = [];
 
@@ -19,6 +19,9 @@ const createStore = (initState,reducer) => {
       listener();
     }
   }
+
+  /* 注意！！！只修改了这里，用一个不匹配任何计划的 type，来获取初始值 */
+  dispatch({ type: Symbol() })
 
   function getState() {
     return state;
@@ -66,7 +69,13 @@ store.dispatch({
 });*/
 
 /*plan 函数*/
+let initCountState = {
+  count: 0
+};
 function counterReducer(state, action) {
+  if (!state) {
+    state = initCountState;
+  }
   switch(action.type) {
     case 'increment':
       return {
@@ -83,7 +92,14 @@ function counterReducer(state, action) {
   }
 }
 
+let initInfoState = {
+  name: '',
+  description: ''
+};
 function InfoReducer(state, action) {
+  if (!state) {
+    state = initInfoState;
+  }
   switch (action.type) {
     case 'SET_NAME':
       return {
@@ -130,12 +146,29 @@ const reducer = combineReducer({
 });
 
 
-let store = createStore(initState, reducer);
+let store = createStore(reducer);
 store.subscribe(() => {
   let state = store.getState();
-  console.log(state);
 });
 
-store.dispatch({type: 'SET_NAME', name: '哈哈'});
+const next = store.dispatch;
+
+/*重写了store.dispatch, 记录日志*/
+
+store.dispatch = action => {
+  try {
+    console.log('this state', store.getState());
+    console.log('action', action);
+    next(action);
+    console.log('next state', store.getState());
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 store.dispatch({type: 'increment'});
+
+let test = (number) => ({a1: number+1,a2: number+2});
+console.log(test(1));
+
 
