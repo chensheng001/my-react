@@ -1,11 +1,11 @@
 import React from 'react';
-import MyRedux from "./MyRedux";
+import Home from "./Home";
 
 function App() {
 
   return (
     <div className="App">
-      <MyRedux />
+      <Home />
     </div>
   );
 }

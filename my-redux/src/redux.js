@@ -168,7 +168,7 @@ store.dispatch = action => {
 
 store.dispatch({type: 'increment'});
 
-let test = (number) => ({a1: number+1,a2: number+2});
-console.log(test(1));
+console.log(process)
+
 
 
